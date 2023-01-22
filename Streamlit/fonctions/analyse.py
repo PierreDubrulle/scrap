@@ -81,7 +81,7 @@ def liste_sentiment(corpus_nettoye):
             liste_sen.append("Positif")
         else:
             liste_sen.append("Très positif")
-    dict_sentiment = dict(zip(corpus_nettoye, liste_sen ))
+    dict_sentiment = dict(zip(corpus_nettoye, liste_sen))
     commentaires_positifs = [key for key, value in dict_sentiment.items() if value == 'Positif']
     commentaires_negatifs = [key for key, value in dict_sentiment.items() if value == 'Négatif']
     commentaires_tres_negatifs = [key for key, value in dict_sentiment.items() if value == 'Très Négatif']

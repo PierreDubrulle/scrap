@@ -92,6 +92,7 @@ if selected_year and selected_option=='Commentaires':
         #afficher le dendrogramme
         my_dendogram(Z_hotel,seuil=number)
         #st.button("Re-run")
+        st.write(my_cah_from_doc2vec(corpus_nettoye, Z_hotel, seuil=number))
     except:
         st.write('Il n\'y a pas assez de données pour les options sélectionnées.')
     

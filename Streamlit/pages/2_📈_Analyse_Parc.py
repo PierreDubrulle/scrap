@@ -46,6 +46,8 @@ if selected_year and selected_option=='Commentaires':
         st.markdown('## Analyse des sentiments')
 
         sentiments, comm_tres_positifs, comm_positifs, comm_neutres, comm_negatifs, comm_tres_negatifs = liste_sentiment(corpus_nettoye=corpus_nettoye)
+        print(sentiment)
+        print(comm_tres_positifs)
         fig, axs = fig_sentiment(sentiments)
         st.pyplot(fig)
 
@@ -95,7 +97,7 @@ if selected_year and selected_option=='Commentaires':
         #afficher le dendrogramme
         my_dendogram(Z_hotel,seuil=number)
         #st.button("Re-run")
-        st.write(my_cah_from_doc2vec(corpus_nettoye, Z_hotel))
+        st.write(my_cah_from_doc2vec(corpus_nettoye, Z_hotel, seuil=number))
     except:
         st.write('Pas assez de données disponibles pour les options sélectionnées')
     
