@@ -1,7 +1,6 @@
 import string, numpy as np, streamlit as st, nltk, pattern
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
-# nltk.download('wordnet')
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
@@ -158,7 +157,7 @@ def matrice_lien(corpus,trained):
     return Z
 
 #dendrogramme avec le seuil
-def my_dendogram(matrice,seuil=10):
+def my_dendogram(matrice,seuil=0.7):
     
     #st.write("CAH")
     dendrogram(matrice,orientation='left',color_threshold=seuil)
@@ -170,7 +169,7 @@ def my_dendogram(matrice,seuil=10):
 # #seuil par défaut = 100, mais le but est d'avoir 4 groupes
 # #corpus ici se présente sous la forme d'une liste de listes de tokens
 
-def my_cah_from_doc2vec(corpus,matrice,seuil=10,nbTermes=7):
+def my_cah_from_doc2vec(corpus,matrice,seuil=0.7,nbTermes=7):
     ### permettre à l'utilisateur de choisir le seuil
 
     #découpage en 4 classes

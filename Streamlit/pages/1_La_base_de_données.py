@@ -16,21 +16,14 @@ div.stButton > button:first-child {
 
 st.markdown('# Mise à jour de la base de données')
 
-total, total_site, some_comments, year = statistics()
+total, total_site, some_comments, years_hotel, years_parc = statistics()
 icon = Image.open('./base-de-donnees.png')
 with st.container():
     col1, col2 = st.columns(2)
     with col1:
         st.image(icon)
-        # st.write(f'Il y a actuellement : {total} commentaires dans la base de données.')
     with col2:
-        reload = st.button('Mettre à jour la base données')  
-        if reload:
-            maj = run()
-            if maj == 1:
-                st.warning('La base est déjà à jour !')
-            else:
-                st.warning('De nouveaux avis ont été importés !')
+        st.write(f'Il y a actuellement : {total} commentaires dans la base de données.')
         for x in total_site:
             st.write(f"{x['_id']} : {x['count']}")
 
