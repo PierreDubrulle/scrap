@@ -29,42 +29,48 @@ def pie_charte_notes(notes):
 
 
 
-def nettoyage(commentaire):
+def nettoyage_doc(commentaire):
     commentaire = commentaire.lower()
-    commentaire = ''.join([w for w in commentaire if (not w in ponctuations) and (not w in chiffres)])
+    commentaire = "".join([w for w in list(commentaire) if not w in ponctuations])
+    commentaire = "".join([w for w in list(commentaire) if not w in chiffres])
     commentaire = word_tokenize(commentaire)
     commentaire = [lem.lemmatize(terme) for terme in commentaire]
     commentaire = [w for w in commentaire if not w in mots_vides]
-    commentaire = [w for w in commentaire if len(w) > 3]
-    commentaire = ' '.join(w for w in commentaire)
+    commentaire = [w for w in commentaire if len(w)>=3]
+    #fin
     return commentaire
 
-def nettoyage_corpus(corpus):
-    output = [nettoyage(commentaire) for commentaire in corpus]
+def nettoyage_corpus(corpus,vire_vide=True):
+    output = [nettoyage_doc(doc) for doc in corpus if ((len(doc) > 0) or (vire_vide == False))]
     return output
 
 
-def wordcloud(commentaires_nettoyés):
-        comment = []
-        comment_word = " "
-        for val in commentaires_nettoyés:
-                val = "".join(val)
-                val = str(val)
-                tokens = val.split()
-                comment_word = " ".join(tokens)+" "
-                comment.append(comment_word)
-        comment = " ".join(com for com in comment)+" "
-        comment = " ".join(w for w in comment.split(' ') if w not in mots_vides)
-        wordcloud = WordCloud(width = 800, height = 800,
+
+def wordcloud(commentaires):
+    comment_words = ''
+
+    for word in commentaires:
+     
+        word = str(word)
+ 
+        tokens = word.split()
+     
+        for i in range(len(tokens)):
+            tokens[i] = tokens[i].lower()
+     
+        comment_words += " ".join(tokens)+" "
+        
+    wordcloud = WordCloud(width = 800, height = 800,
                 background_color ='white',
-                min_font_size = 10).generate(comment)
-        # fig, axs = plt.subplots()
-        plt.figure(figsize = (8, 8), facecolor = None)
-        plt.axis("off")
-        plt.figure(figsize = (8, 8), facecolor = None)
-        plt.axis("off")
-        plt.tight_layout(pad = 0)
-        plt.imshow(wordcloud)
+                      stopwords = mots_vides,
+                min_font_size = 10).generate(comment_words)
+
+    # plot WordCloud                     
+    plt.figure(figsize = (8, 8), facecolor = None)
+    plt.imshow(wordcloud)
+    plt.axis("off")
+    plt.tight_layout(pad = 0)
+    # plt.show()
 
 
 def liste_sentiment(corpus_nettoye):
@@ -92,11 +98,12 @@ def liste_sentiment(corpus_nettoye):
 
 def fig_sentiment(sentiments):
     liste_sentiment = sentiments
-    labels = set(liste_sentiment)
-    sizes = [Counter(liste_sentiment)[x] for x in Counter(liste_sentiment)]
-    colors = ['#AADEA7', '#FEAE65', '#E6F69D','#2D87BB']
+    liste_sentiment = Counter(liste_sentiment)
+    liste_sentiment = {k: v for k,v in liste_sentiment.items() if v > 1}
+    labels = [k for k in liste_sentiment]
+    sizes = [liste_sentiment[k] for k in liste_sentiment]
     fig, axs = plt.subplots()
-    plt.pie(sizes, labels=labels, autopct='%.2f%%', colors=colors)
+    plt.pie(sizes, labels=labels, autopct='%.2f%%')
     return fig, axs
 
 

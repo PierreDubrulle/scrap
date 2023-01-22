@@ -44,7 +44,7 @@ if selected_year and selected_option=='Commentaires':
 
 
         st.markdown('## Analyse des sentiments')
-        sentiments, comm_tres_positifs, comm_positifs, comm_neutres, comm_negatifs, comm_tres_negatifs = liste_sentiment(corpus_nettoye=corpus_nettoye)
+        sentiments, comm_tres_positifs, comm_positifs, comm_neutres, comm_negatifs, comm_tres_negatifs = liste_sentiment(corpus_nettoye=comments)
         fig, axs = fig_sentiment(sentiments)
         st.pyplot(fig)
 
@@ -86,13 +86,15 @@ if selected_year and selected_option=='Commentaires':
         Z_hotel = matrice_lien(corpus_nettoye,words_hotel)
         #st.button("Re-run")
         
-        number = st.number_input("Entrez un seuil :", min_value=0.1, max_value=200.0, step=0.1, format="%.2f", value=0.7)
+        number = st.number_input("Entrez un seuil :", min_value=1, max_value=200, step=&, format="%d", value=10)
         
         st.markdown("## le dendrogramme")
         #afficher le dendrogramme
         my_dendogram(Z_hotel,seuil=number)
         #st.button("Re-run")
-        st.write(my_cah_from_doc2vec(corpus_nettoye, Z_hotel, seuil=number))
+        result = my_cah_from_doc2vec(corpus_nettoye, Z_hotel, seuil=number)
+        for x in result:
+            st.write(x)
     except:
         st.write('Il n\'y a pas assez de données pour les options sélectionnées.')
     
