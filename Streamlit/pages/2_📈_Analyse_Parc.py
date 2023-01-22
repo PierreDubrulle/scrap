@@ -46,7 +46,6 @@ if selected_year and selected_option=='Commentaires':
         st.markdown('## Analyse des sentiments')
 
         sentiments, comm_tres_positifs, comm_positifs, comm_neutres, comm_negatifs, comm_tres_negatifs = liste_sentiment(corpus_nettoye=corpus_nettoye)
-        print(sentiment)
         print(comm_tres_positifs)
         fig, axs = fig_sentiment(sentiments)
         st.pyplot(fig)
